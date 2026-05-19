@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Foodi – Dive into Delights</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.min.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+  <style>
+    :root {
+      --green: #2dbd6e;
+      --green-dark: #1fa057;
+      --green-light: #e8f9f0;
+      --text-dark: #1a1a1a;
+      --text-gray: #6b7280;
+      --bg: #f7f7f5;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .logo {
+      font-family: 'Syne', sans-serif;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247,247,245,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #ececec;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .logo-box {
+      background: var(--green);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      margin-left: 1rem;
+      list-style: none;
+      padding: 0;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a.active,
+    .nav-links a:hover { color: var(--green); }
+
+    .nav-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .nav-icon {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: white;
+      border: 1px solid #e5e7eb;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .nav-icon:hover { background: var(--green-light); }
+
+    .btn-contact {
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-contact:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff3e0;
+      color: #e67e22;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+      color: var(--text-dark);
+    }
+
+    .hero h1 span { color: var(--green); }
+
+    .hero p {
+      color: var(--text-gray);
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 380px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.8rem;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(45,189,110,0.3);
+    }
+    .btn-primary:hover {
+      background: var(--green-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(45,189,110,0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-dark);
+      border: 2px solid #d1d5db;
+      padding: 0.75rem 1.8rem;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover {
+      border-color: var(--green);
+      color: var(--green);
+      transform: translateY(-2px);
+    }
+
+    /* Hero image area */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-circle {
+      width: 340px;
+      height: 340px;
+      background: var(--green);
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-person {
+      width: 110%;
+      object-fit: cover;
+      position: absolute;
+      bottom: 0;
+    }
+
+    .hero-cards {
+      position: absolute;
+      bottom: -20px;
+      left: -20px;
+      right: -20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 10px;
+    }
+
+    .food-card-mini {
+      background: white;
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      flex: 1;
+      min-width: 130px;
+    }
+
+    .food-card-mini img {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #f0fdf4;
+    }
+
+    .food-card-mini .food-img-placeholder {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .food-card-mini .info h4 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin: 0 0 2px;
+    }
+
+    .stars { color: #f59e0b; font-size: 0.6rem; }
+    .price { color: var(--text-dark); font-size: 0.78rem; font-weight: 700; }
+
+    /* SECTION COMMON */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    /* CATEGORIES */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .cat-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      border: 2px solid transparent;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .cat-card:hover {
+      border-color: var(--green);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(45,189,110,0.15);
+    }
+
+    .cat-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--green-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 2rem;
+    }
+
+    .cat-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .cat-card p { font-size: 0.8rem; color: var(--text-gray); }
+
+    /* MENU SECTION */
+    .menu-section {
+      background: white;
+    }
+
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2.5rem;
+    }
+
+    .menu-header h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      max-width: 300px;
+    }
+
+    .nav-arrows {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .arrow-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid #e5e7eb;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: all 0.2s;
+      color: var(--text-gray);
+    }
+
+    .arrow-btn.active,
+    .arrow-btn:hover {
+      background: var(--green);
+      border-color: var(--green);
+      color: white;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .menu-card {
+      border: 1px solid #f0f0f0;
+      border-radius: 20px;
+      padding: 1.5rem;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      background: #fafafa;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+    }
+
+    .heart-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 36px;
+      height: 36px;
+      background: white;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: background 0.2s;
+    }
+    .heart-btn:hover { background: var(--green-light); }
+
+    .dish-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 1.2rem;
+      background: var(--green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    .menu-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .menu-card .desc {
+      font-size: 0.8rem;
+      color: var(--text-gray);
+      margin-bottom: 0.75rem;
+    }
+
+    .menu-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .price-big { font-size: 1.1rem; font-weight: 800; }
+    .rating { font-size: 0.82rem; color: #f59e0b; font-weight: 600; display: flex; align-items: center; gap: 3px; }
+
+    /* TESTIMONIAL */
+    .testimonial-section {
+      background: var(--bg);
+    }
+
+    .test-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .chef-visual {
+      position: relative;
+    }
+
+    .chef-circle {
+      width: 280px;
+      height: 280px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .chef-badge {
+      position: absolute;
+      bottom: 16px;
+      right: -10px;
+      background: white;
+      border-radius: 12px;
+      padding: 8px 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .emoji-float {
+      position: absolute;
+      font-size: 1.6rem;
+    }
+
+    .test-content h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .test-quote {
+      font-size: 0.95rem;
+      color: var(--text-gray);
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-left: 1rem;
+      border-left: 3px solid var(--green);
+    }
+
+    .reviewer {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .reviewer-imgs {
+      display: flex;
+    }
+
+    .reviewer-img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid white;
+      background: var(--green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      margin-left: -8px;
+    }
+    .reviewer-imgs .reviewer-img:first-child { margin-left: 0; }
+
+    .reviewer-info h4 { font-size: 0.88rem; font-weight: 700; margin: 0 0 2px; }
+    .reviewer-info p { font-size: 0.78rem; color: var(--text-gray); margin: 0; }
+
+    /* SERVICES */
+    .services-section {
+      background: white;
+    }
+
+    .services-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .services-left h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .services-left p {
+      color: var(--text-gray);
+      line-height: 1.7;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .service-card {
+      background: var(--bg);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .service-card:first-child {
+      background: white;
+      border: 1px solid #f0f0f0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    .service-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--green-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .service-card p {
+      font-size: 0.78rem;
+      color: var(--text-gray);
+      line-height: 1.5;
+    }
+
+    /* FOOTER */
+    footer {
+      background: white;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem 2rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: var(--text-gray);
+      line-height: 1.6;
+      margin: 1rem 0 1.5rem;
+      max-width: 220px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      background: var(--green);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .social-btn:hover { background: var(--green-dark); transform: translateY(-2px); }
+
+    .footer-col h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .footer-col ul li a {
+      font-size: 0.85rem;
+      color: var(--text-gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--green); }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      border-top: 1px solid #f0f0f0;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-gray);
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    .animate-fade-up { animation: fadeUp 0.7s ease both; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+
+    .float { animation: float 3s ease-in-out infinite; }
+
+    /* Responsive basics */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .hero p { max-width: 100%; }
+      .hero-btns { justify-content: center; }
+      .hero-visual { justify-content: center; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .menu-grid { grid-template-columns: repeat(2, 1fr); }
+      .test-inner, .services-inner { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <span class="logo-box">F</span>oodi
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#">Menu ▾</a></li>
+      <li><a href="#">Services ▾</a></li>
+      <li><a href="#">Offers</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="nav-icon" title="Search">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </div>
+      <div class="nav-icon" title="Cart">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      </div>
+      <button class="btn-contact">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.08 3.4 2 2 0 0 1 3.06 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16z"/></svg>
+        Contact
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <!-- Left -->
+  <div>
+    <div class="hero-tag animate-fade-up">
+      🌶️ Hot spicy Food
+    </div>
+    <h1 class="animate-fade-up delay-1">
+      Dive into Delights<br>Of Delectable <span>Food</span>
+    </h1>
+    <p class="animate-fade-up delay-2">
+      Where Each Plate Weaves a Story of Culinary Mastery and Passionate Craftsmanship
+    </p>
+    <div class="hero-btns animate-fade-up delay-3">
+      <button class="btn-primary">Order Now</button>
+      <button class="btn-outline">Explore More</button>
+    </div>
+  </div>
+
+  <!-- Right -->
+  <div class="hero-visual animate-fade-up delay-2">
+    <div style="position:relative; display:inline-block;">
+      <div class="hero-circle float">
+        <!-- Person placeholder emoji -->
+        <div style="font-size:12rem; line-height:1; position:absolute; bottom:0; user-select:none; opacity:0.85;">👩</div>
+      </div>
+      <!-- Mini Cards -->
+      <div class="hero-cards">
+        <div class="food-card-mini">
+          <div class="food-img-placeholder" style="background:#fef9c3;">🍜</div>
+          <div class="info">
+            <h4>Spicy noodles</h4>
+            <div class="stars">★★★★☆</div>
+            <div class="price">$18.00</div>
+          </div>
+        </div>
+        <div class="food-card-mini">
+          <div class="food-img-placeholder" style="background:#f0fdf4;">🥗</div>
+          <div class="info">
+            <h4>Vegetarian salad</h4>
+            <div class="stars">★★★★★</div>
+            <div class="price">$23.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section style="background: #f7f7f5;">
+  <div class="container">
+    <h2 class="section-title">Popular Catagories</h2>
+    <div class="categories-grid">
+      <div class="cat-card">
+        <div class="cat-icon">🍔</div>
+        <h3>Main Dish</h3>
+        <p>(86 dishes)</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-icon">🥞</div>
+        <h3>Break Fast</h3>
+        <p>(12 break fast)</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-icon">🍰</div>
+        <h3>Dessert</h3>
+        <p>(48 dessert)</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-icon">🍊</div>
+        <h3>Browse All</h3>
+        <p>(255 items)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STANDOUT MENU -->
+<section class="menu-section">
+  <div class="container">
+    <div class="menu-header">
+      <h2>Standout Dishes<br>From Our Menu</h2>
+      <div class="nav-arrows">
+        <button class="arrow-btn">&#8249;</button>
+        <button class="arrow-btn active">&#8250;</button>
+      </div>
+    </div>
+    <div class="menu-grid">
+      <!-- Card 1 -->
+      <div class="menu-card">
+        <button class="heart-btn">🤍</button>
+        <div class="dish-img">🥗</div>
+        <h3>Fattoush salad</h3>
+        <p class="desc">Description of the item</p>
+        <div class="menu-card-footer">
+          <span class="price-big">$24.00</span>
+          <span class="rating">★ 4.9</span>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="menu-card">
+        <button class="heart-btn">🤍</button>
+        <div class="dish-img">🥑</div>
+        <h3>Vegetable salad</h3>
+        <p class="desc">Description of the item</p>
+        <div class="menu-card-footer">
+          <span class="price-big">$26.00</span>
+          <span class="rating">★ 4.6</span>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="menu-card">
+        <button class="heart-btn">🤍</button>
+        <div class="dish-img">🍳</div>
+        <h3>Egg vegi salad</h3>
+        <p class="desc">Description of the item</p>
+        <div class="menu-card-footer">
+          <span class="price-big">$23.00</span>
+          <span class="rating">★ 4.5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section">
+  <div class="container">
+    <div class="test-inner">
+      <!-- Chef visual -->
+      <div class="chef-visual" style="display:flex; align-items:center; justify-content:center; position:relative;">
+        <span class="emoji-float" style="top: 10px; left: 20px; animation: float 2.5s ease-in-out infinite;">😊</span>
+        <span class="emoji-float" style="bottom: 30px; left: 10px; animation: float 3.5s ease-in-out infinite 0.5s;">🌟</span>
+        <div class="chef-circle float">
+          <div style="font-size:11rem; line-height:1; position:absolute; bottom:0; user-select:none;">👩‍🍳</div>
+        </div>
+        <div class="chef-badge">
+          Our Best Chef 👨‍🍳
+        </div>
+      </div>
+      <!-- Content -->
+      <div class="test-content">
+        <h2>What Our Customers Say About Us</h2>
+        <p class="test-quote">
+          "I had the pleasure of dining at Foodi last night, and I'm still raving about the experience! The attention to detail in presentation and service was impeccable"
+        </p>
+        <div class="reviewer">
+          <div class="reviewer-imgs">
+            <div class="reviewer-img">👤</div>
+            <div class="reviewer-img">👤</div>
+            <div class="reviewer-img">👤</div>
+          </div>
+          <div class="reviewer-info">
+            <h4>Customer Feedback</h4>
+            <p>⭐ 4.9 &nbsp;(18.6k Reviews)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <div class="container">
+    <div class="services-inner">
+      <div class="services-left">
+        <h2>Our Culinary Journey And Services</h2>
+        <p>Rooted in passion, we curate unforgettable dining experiences and offer exceptional services, blending culinary artistry with warm hospitality.</p>
+        <button class="btn-primary">Explore</button>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🍽️</div>
+          <h4>Catering</h4>
+          <p>Delight your guests with our flavors and presentation</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">⚡</div>
+          <h4>Fast Delivery</h4>
+          <p>We deliver your order promptly to your door</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📱</div>
+          <h4>Online Ordering</h4>
+          <p>Explore menu & order with ease using our Online Ordering</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🎁</div>
+          <h4>Gift Cards</h4>
+          <p>Give the gift of exceptional dining with Foodi Gift Cards</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">
+        <span class="logo-box">F</span>oodi
+      </div>
+      <p>Savor the artistry where every dish is a culinary masterpiece</p>
+      <div class="social-links">
+        <a class="social-btn" href="#">𝕏</a>
+        <a class="social-btn" href="#">📷</a>
+        <a class="social-btn" href="#">🎵</a>
+        <a class="social-btn" href="#">▶</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Useful links</h4>
+      <ul>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Blogs</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Main Menu</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Offers</a></li>
+        <li><a href="#">Menus</a></li>
+        <li><a href="#">Reservation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <ul>
+        <li><a href="#">example@email.com</a></li>
+        <li><a href="#">+64 958 248 966</a></li>
+        <li><a href="#">Social media</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    Copyright &copy; 2024 Mohamed Ahmed | All rights reserved
+  </div>
+</footer>
+
+</body>
+</html>
